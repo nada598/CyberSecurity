@@ -1,0 +1,21 @@
+name: ProsLint Check
+
+on:
+  pull_request:
+    paths:
+      - '**/*.md'
+
+jobs:
+  proselint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t proselint-action .
+
+      - name: Run ProsLint
+        run: docker run -v $(pwd):/app proselint-action
+
