@@ -1,0 +1,28 @@
+ name: Proselint and Write-Good Check                                                                         
+                                                                                                              
+ on:                                                                                                          
+   push:                                                                                                      
+     branches: [master]                                                                                       
+                                                                                                              
+ jobs:                                                                                                        
+   lint:                                                                                                      
+     runs-on: ubuntu-latest                                                                                   
+                                                                                                              
+     steps:                                                                                                   
+       - name: Checkout repository                                                                            
+         uses: actions/checkout@v2                                                                            
+                                                                                                              
+       - name: Set up Python environment                                                                      
+         run: |                                                                                               
+           python3 -m venv venv                                                                               
+           source venv/bin/activate                                                                           
+           pip install proselint write-good                                                                   
+                                                                                                              
+       - name: Run Proselint and write-good                                                                   
+         run: |                                                                                               
+           # Activate the virtual environment                                                                 
+           source venv/bin/activate                                                                           
+                                                                                                              
+           # Run proselint and write-good on Markdown files                                                    
+           proselint '**/*.md'                                                                                
+           write-good '**/*.md'  
